@@ -148,6 +148,10 @@ function find(ipl) {
 
         for(var i=0; i<entries.length; i++) {
             var entry = entries[i].split(",");
+            // ignore incorrect lines.
+            if (entry && entry.length != 3) {
+                continue;
+            }
             // ignore ipv6 addresses.
             if (entry[0].indexOf(':') != -1) {
                 continue;
