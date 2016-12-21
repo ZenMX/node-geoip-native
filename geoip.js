@@ -141,7 +141,7 @@ function find(ipl) {
     var buffer = "";
 
     stream.addListener("data", function(data) {
-        buffer += data.toString().replace(/"/g, "");
+        buffer += data.toString().replace(/"/g, "").replace(/\r/g, "");
     });
 
     stream.addListener("end", function() {
