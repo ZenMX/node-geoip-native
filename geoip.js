@@ -14,8 +14,6 @@ var geoip = module.exports = {
 
         var ipl = iplong(ip);
 
-        console.log(ipl);
-
         if(ipl == 0) {
             return { error: "Invalid ip address " + ip + " -> " + ipl + " as integer" };
         }
