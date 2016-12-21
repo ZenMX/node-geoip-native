@@ -44,7 +44,14 @@ function test() {
     test();
 }
 
-setTimeout(test, 3000);
+// setTimeout(test, 3000);
+
+function test2() {
+    console.log(geoip.lookup('180.149.241.185'));
+}
+
+
+setTimeout(test2, 3000);
 
 /*
 benchmark results:

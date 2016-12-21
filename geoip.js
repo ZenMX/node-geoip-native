@@ -14,6 +14,8 @@ var geoip = module.exports = {
 
         var ipl = iplong(ip);
 
+        console.log(ipl);
+
         if(ipl == 0) {
             return { error: "Invalid ip address " + ip + " -> " + ipl + " as integer" };
         }
@@ -134,7 +136,8 @@ function find(ipl) {
 
     var fs = require("fs");
     var sys = require("util");
-    var stream = fs.createReadStream(__dirname + "/GeoIPCountryWhois.csv");
+    // var stream = fs.createReadStream(__dirname + "/GeoIPCountryWhois.csv");
+    var stream = fs.createReadStream(__dirname + "/dbip-country.csv");
     var buffer = "";
 
     stream.addListener("data", function(data) {
@@ -147,7 +150,13 @@ function find(ipl) {
 
         for(var i=0; i<entries.length; i++) {
             var entry = entries[i].split(",");
-            countries.push({ipstart: parseInt(entry[2]), code: entry[4], name: entry[5]});
+            // ignore ipv6 addresses.
+            if (entry[0].indexOf(':') != -1) {
+                continue;
+            }
+            var ipvals = entry[0].split('.');
+            var ipstart = (parseInt(ipvals[0]) * 0xffffff) + (parseInt(ipvals[1]) << 16) + (parseInt(ipvals[2]) << 8) + parseInt(ipvals[3])
+            countries.push({ipstart: ipstart, code: entry[2], name: entry[2]});
         }
 
         countries.sort(function(a, b) {
